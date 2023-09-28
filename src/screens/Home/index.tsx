@@ -1,17 +1,18 @@
 import { Text, View, TextInput, TouchableOpacity, FlatList, Alert } from 'react-native'
 import { styles } from './styles'
 import { Participant } from '../components/Participant'
+import { useState } from 'react'
 
 export function Home() {
-  const participants = [
-    'Leo', 'Robbie', 'Paul', 'Logan', 'Mary', 'Spencer', 'Gunner',
-    'Annie', 'Sonny', 'Oliver', 'Lucy', 'George', 'Rocky'
-  ]
+  const [participants, setParticipants ] = useState(['Gunner'])
 
   function handleParticipantAdd() {
+
     if (participants.includes('Logan')) {
       return Alert.alert('Participante duplicado', 'Este participante já foi adicionado.')
     }
+
+    setParticipants(prevState => [...prevState, 'Spencer'])
   }
 
   function handleParticipantRemove(name: string) {
@@ -34,7 +35,7 @@ export function Home() {
       </Text>
       <Text
         style={styles.eventDate}>
-        Segunda, 26 de setembro de 2023
+        quarta-feira, 27 de setembro de 2023
       </Text>
 
       <View style={styles.form}>
