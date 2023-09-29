@@ -9,6 +9,7 @@
     "web": "npx expo start --web"
   },
   "dependencies": {
+    "dayjs": "^1.11.10",
     "expo": "~49.0.12",
     "expo-status-bar": "~1.6.0",
     "react": "18.2.0",

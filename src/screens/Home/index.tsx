@@ -2,17 +2,31 @@ import { Text, View, TextInput, TouchableOpacity, FlatList, Alert } from 'react-
 import { styles } from './styles'
 import { Participant } from '../components/Participant'
 import { useState } from 'react'
+import dayjs from 'dayjs'
+import 'dayjs/locale/pt-br'
+
+dayjs.locale('pt-br')
 
 export function Home() {
+  const [date] = useState<string>(dayjs().format('dddd, DD [de] MM [de] YYYY'))
+
   const [participants, setParticipants] = useState<string[]>([])
   const [participantName, setParticipantName] = useState('')
 
   function handleParticipantAdd() {
-    if (participants.includes(participantName)) {
+    if (participantName.trim().length < 4) {
+      return Alert.alert('Nome inválido', 'O nome do partipante deve possuir no mínimo 4 caracteres')
+    }
+
+    if (!participantName.trim()) {
+      return Alert.alert('Nome vazio', 'O nome do partipante deve ser preenchido.')
+    }
+
+    if (participants.includes(participantName.trim())) {
       return Alert.alert('Participante duplicado', 'Este participante já foi adicionado.')
     }
 
-    setParticipants(prevState => [...prevState, participantName])
+    setParticipants(prevState => [...prevState, participantName.trim()])
     setParticipantName('')
   }
 
@@ -32,11 +46,10 @@ export function Home() {
   return (
     <View style={styles.container}>
       <Text style={styles.eventName}>
-        Nome do evento
+        Lista de participantes
       </Text>
-      <Text
-        style={styles.eventDate}>
-        quarta-feira, 27 de setembro de 2023
+      <Text style={styles.eventDate}>
+        {date}
       </Text>
 
       <View style={styles.form}>
@@ -67,7 +80,7 @@ export function Home() {
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={() => (
           <Text style={styles.listEmptyText}>
-            A lista de participantes está vazia. Adicione os participantes.
+            A lista de participantes está vazia. Adicione os nomes dos participantes.
           </Text>
         )}
       />
